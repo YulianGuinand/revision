@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import {
   Card,
@@ -22,7 +23,12 @@ export const SessionComp = () => {
 
   const onClick = () => {
     if (!textRef.current) return;
-    setData(JSON.parse(textRef.current.value));
+    if (textRef.current.value.length <= 10) return;
+    try {
+      setData(JSON.parse(textRef.current.value));
+    } catch {
+      toast.error("Une erreur est survenue");
+    }
   };
 
   const onSubmit = () => {
@@ -45,6 +51,34 @@ export const SessionComp = () => {
     setData(null);
   };
 
+  const ExampleData = [
+    {
+      q: "Quelle est la capitale de l'Australie ?",
+      answers: ["Sydney", "Canberra", "Melbourne"],
+      correct: 1,
+    },
+    {
+      q: "Qui a peint la Joconde ?",
+      answers: ["Vincent Van Gogh", "Pablo Picasso", "Léonard de Vinci"],
+      correct: 2,
+    },
+    {
+      q: "Combien de continents y a-t-il sur Terre ?",
+      answers: ["5", "6", "7"],
+      correct: 2,
+    },
+    {
+      q: "Quel est l'élément chimique dont le symbole est O ?",
+      answers: ["Or", "Oxygène", "Osmium"],
+      correct: 1,
+    },
+    {
+      q: "Quelle est la langue officielle du Brésil ?",
+      answers: ["Espagnol", "Portugais", "Français"],
+      correct: 1,
+    },
+  ];
+
   return (
     <Card className="w-full max-w-md">
       {!data ? (
@@ -55,7 +89,7 @@ export const SessionComp = () => {
           <CardContent>
             <Textarea
               ref={textRef}
-              placeholder="Entrez vos questions."
+              placeholder={JSON.stringify(ExampleData, null, 2)}
               className="w-sm max-h-96"
             />
           </CardContent>
