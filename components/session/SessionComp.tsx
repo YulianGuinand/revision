@@ -1,5 +1,4 @@
 "use client";
-
 import { useRef, useState } from "react";
 import { Button } from "../ui/button";
 import {
@@ -56,7 +55,7 @@ export const SessionComp = () => {
           <CardContent>
             <Textarea
               ref={textRef}
-              placeholder="Type your message here."
+              placeholder="Entrez vos questions."
               className="w-sm max-h-96"
             />
           </CardContent>
